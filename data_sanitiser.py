@@ -1,6 +1,7 @@
 from typing import List, Union, Dict, Optional
 import pandas as pd
 import numpy as np
+import hashlib
 
 def clip(series: pd.Series, min_value: float, max_value: float) -> pd.Series:
     return series.clip(lower=min_value, upper=max_value)
@@ -8,8 +9,11 @@ def clip(series: pd.Series, min_value: float, max_value: float) -> pd.Series:
 def categorise(series: pd.Series, bins: Union[int, List[float]], labels: Optional[List[str]] = None) -> pd.Series:
     return pd.cut(series, bins=bins, labels=labels)
 
+# TODO: remove common salt for all values and combine with unique id column 
 def hash_values(series: pd.Series, salt: str = '') -> pd.Series:
-    return series.apply(lambda x: hash(str(x) + salt) if pd.notnull(x) else x)
+    return series.apply(lambda x: hashlib.sha256((str(x) + salt).encode('utf-8')).hexdigest() if pd.notnull(x) else x)
+    # #if we wanted to use the inbuilt python hashing function
+    # return series.apply(lambda x: hash(str(x) + salt) if pd.notnull(x) else x)
 
 def suppress(series: pd.Series, threshold: int = 5, replacement: Optional[Union[str, int, float]] = None) -> pd.Series:
     value_counts = series.value_counts()
