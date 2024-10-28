@@ -105,6 +105,21 @@ class TestSanitiseData:
         assert result['age'].max() <= 80
         assert set(result['income'].unique()) <= {'low', 'medium', 'high'}
         assert all(count >= 2 for count in result['city'].value_counts())
+    def test_error_handling(self, sample_df):
+        """Test error handling for various invalid inputs."""
+        
+        # Test invalid column name
+        with pytest.raises(ValueError, match="Column 'invalid_column' not found"):
+            data_sanitiser.sanitise_data(sample_df, ['invalid_column'], {'invalid_column': {'method': 'clip'}})
+        
+        # Test invalid method
+        with pytest.raises(ValueError, match="Unknown sanitisation method"):
+            data_sanitiser.sanitise_data(sample_df, ['age'], {'age': {'method': 'invalid_method'}})
+        
+        # Test missing required parameters for clip
+        with pytest.raises(KeyError):
+            data_sanitiser.sanitise_data(sample_df, ['age'], {'age': {'method': 'clip', 'params': {}}})
+
 
 if __name__ == '__main__':
     pytest.main([__file__])
