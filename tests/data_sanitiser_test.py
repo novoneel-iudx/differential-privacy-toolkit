@@ -105,6 +105,7 @@ class TestSanitiseData:
         assert result['age'].max() <= 80
         assert set(result['income'].unique()) <= {'low', 'medium', 'high'}
         assert all(count >= 2 for count in result['city'].value_counts())
+
     def test_error_handling(self, sample_df):
         """Test error handling for various invalid inputs."""
         
@@ -120,6 +121,16 @@ class TestSanitiseData:
         with pytest.raises(KeyError):
             data_sanitiser.sanitise_data(sample_df, ['age'], {'age': {'method': 'clip', 'params': {}}})
 
+    def test_empty_dataframe(self):
+        """Test handling of empty DataFrame."""
+        empty_df = pd.DataFrame(columns=['age', 'income', 'name', 'city'])
+        rules = {
+            'age': {'method': 'clip', 'params': {'min_value': 18, 'max_value': 80}}
+        }
+        
+        result = data_sanitiser.sanitise_data(empty_df, ['age'], rules)
+        assert len(result) == 0
+        assert list(result.columns) == list(empty_df.columns)
 
 if __name__ == '__main__':
     pytest.main([__file__])
