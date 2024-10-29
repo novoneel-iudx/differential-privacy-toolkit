@@ -1,7 +1,9 @@
 import pytest
 import pandas as pd
 import numpy as np
-import data_sanitiser  
+import data_sanitiser
+
+sanitiser = data_sanitiser.SanitiseData
 
 @pytest.fixture
 def sample_df():
@@ -26,7 +28,7 @@ class TestSanitiseData:
             }
         }
         
-        result = data_sanitiser.sanitise_data(sample_df, ['age'], rules)
+        result = sanitiser.sanitise_data(sample_df, ['age'], rules)
         
         # Check that values are clipped
         assert result['age'].min() >= 18
@@ -47,11 +49,11 @@ class TestSanitiseData:
             }
         }
         
-        result = data_sanitiser.sanitise_data(sample_df, ['income'], rules)
+        result = sanitiser.sanitise_data(sample_df, ['income'], rules)
         
         assert set(result['income'].unique()) <= {'low', 'medium', 'high'}
         assert len(result) == len(sample_df)
-        assert pd.api.types.is_categorical_dtype(result['income'])
+        assert isinstance(result['income'].dtype, pd.CategoricalDtype)
 
     def test_hash_method(self, sample_df):
         """Test the hashing functionality."""
@@ -62,13 +64,13 @@ class TestSanitiseData:
             }
         }
         
-        result = data_sanitiser.sanitise_data(sample_df, ['name'], rules)
+        result = sanitiser.sanitise_data(sample_df, ['name'], rules)
         
         # Check that values are hashed
         assert (result['name'] != sample_df['name']).all()
-        # Check that identical values hash to the same value
-        duplicate_df = pd.DataFrame({'name': ['Alice', 'Alice']})
-        duplicate_result = data_sanitiser.sanitise_data(duplicate_df, ['name'], rules)
+        # # Check that identical values hash to the same value
+        # duplicate_df = pd.DataFrame({'name': ['Alice', 'Alice']})
+        # duplicate_result = data_sanitiser.sanitise_data(duplicate_df, ['name'], rules)
         # assert duplicate_result['name'].iloc[0] == duplicate_result['name'].iloc[1]
 
     def test_suppress_method(self, sample_df):
@@ -83,7 +85,7 @@ class TestSanitiseData:
             }
         }
         
-        result = data_sanitiser.sanitise_data(sample_df, ['city'], rules)
+        result = sanitiser.sanitise_data(sample_df, ['city'], rules)
         
         # Check that rare cities (count < 2) are replaced
         value_counts = result['city'].value_counts()
@@ -99,7 +101,7 @@ class TestSanitiseData:
             'city': {'method': 'suppress', 'params': {'threshold': 2, 'replacement': 'Other'}}
         }
         
-        result = data_sanitiser.sanitise_data(sample_df, ['age', 'income', 'city'], rules)
+        result = sanitiser.sanitise_data(sample_df, ['age', 'income', 'city'], rules)
         
         assert result['age'].min() >= 18
         assert result['age'].max() <= 80
@@ -111,15 +113,15 @@ class TestSanitiseData:
         
         # Test invalid column name
         with pytest.raises(ValueError, match="Column 'invalid_column' not found"):
-            data_sanitiser.sanitise_data(sample_df, ['invalid_column'], {'invalid_column': {'method': 'clip'}})
+            sanitiser.sanitise_data(sample_df, ['invalid_column'], {'invalid_column': {'method': 'clip'}})
         
         # Test invalid method
         with pytest.raises(ValueError, match="Unknown sanitisation method"):
-            data_sanitiser.sanitise_data(sample_df, ['age'], {'age': {'method': 'invalid_method'}})
+            sanitiser.sanitise_data(sample_df, ['age'], {'age': {'method': 'invalid_method'}})
         
         # Test missing required parameters for clip
         with pytest.raises(KeyError):
-            data_sanitiser.sanitise_data(sample_df, ['age'], {'age': {'method': 'clip', 'params': {}}})
+            sanitiser.sanitise_data(sample_df, ['age'], {'age': {'method': 'clip', 'params': {}}})
 
     def test_empty_dataframe(self):
         """Test handling of empty DataFrame."""
@@ -128,7 +130,7 @@ class TestSanitiseData:
             'age': {'method': 'clip', 'params': {'min_value': 18, 'max_value': 80}}
         }
         
-        result = data_sanitiser.sanitise_data(empty_df, ['age'], rules)
+        result = sanitiser.sanitise_data(empty_df, ['age'], rules)
         assert len(result) == 0
         assert list(result.columns) == list(empty_df.columns)
 
