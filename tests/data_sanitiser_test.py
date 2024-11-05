@@ -1,9 +1,9 @@
 import pytest
 import pandas as pd
 import numpy as np
-import data_sanitiser
+import sanitisation
 
-sanitiser = data_sanitiser.SanitiseData
+sanitiser = sanitisation.SanitiseData
 
 @pytest.fixture
 def sample_df():
