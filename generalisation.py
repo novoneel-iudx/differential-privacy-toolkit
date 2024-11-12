@@ -10,6 +10,8 @@ class GeneraliseData:
     class SpatialGeneraliser:
         # TODO: rewrite so function can accept both dataframe with specified location column as well as series
         # helper function to clean coordinates attribute formatting
+
+        @staticmethod
         def format_coordinates(series: pd.Series) -> Tuple[pd.Series, pd.Series]:
             def parse_coordinate(coordinate: str) -> Tuple[float, float]:
                 try:
@@ -23,8 +25,8 @@ class GeneraliseData:
             longitude = coordinates.apply(lambda x: x[1])
             return latitude, longitude
 
-        
-        def generalise_spatial_h3(latitude: pd.Series, longitude: pd.Series, spatial_resolution: int) -> pd.Series:
+        @staticmethod
+        def generalise_spatial(latitude: pd.Series, longitude: pd.Series, spatial_resolution: int) -> pd.Series:
             if not (0 <= spatial_resolution <= 15):
                 raise ValueError("H3 Spatial resolution must be between 0 and 15.")
             
@@ -45,13 +47,15 @@ class GeneraliseData:
             return pd.Series(h3_index, name='h3_index')
 
     class TemporalGeneraliser:
-               
+
+        @staticmethod       
         # helper function to clean date and time attribute formatting
         def format_timestamp(series: pd.Series) -> pd.Series:
             return series.apply(pd.to_datetime(errors='coerce')) # coerce non-parseable values to NaN
         
         def __init__(self):
             self.temporal_resolution_args = Literal[15, 30, 60]
+        @staticmethod       
         def generalise_temporal(self, 
                                 data: Union[pd.Series, pd.DataFrame],
                                 timestamp_col: str = None,
