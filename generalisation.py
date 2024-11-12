@@ -2,13 +2,13 @@ from typing import Tuple
 import pandas as pd
 import numpy as np
 import h3
-from typing import Literal, get_args
+from typing import Literal, Union, get_args
 
 
 
 class GeneraliseData:
-    class SpatialGeneralisation:
-        
+    class SpatialGeneraliser:
+        # TODO: rewrite so function can accept both dataframe with specified location column as well as series
         # helper function to clean coordinates attribute formatting
         def format_coordinates(series: pd.Series) -> Tuple[pd.Series, pd.Series]:
             def parse_coordinate(coordinate: str) -> Tuple[float, float]:
@@ -44,33 +44,68 @@ class GeneraliseData:
             
             return pd.Series(h3_index, name='h3_index')
 
-    class TemporalGeneralisation:
+    class TemporalGeneraliser:
                
         # helper function to clean date and time attribute formatting
         def format_timestamp(series: pd.Series) -> pd.Series:
             return series.apply(pd.to_datetime(errors='coerce')) # coerce non-parseable values to NaN
         
-        temporal_resolution_args = Literal[15, 30, 60]
-        def generalise_temporal(self, timestamp: pd.Series, temporal_resolution: temporal_resolution_args=60) -> pd.Series:
+        def __init__(self):
+            self.temporal_resolution_args = Literal[15, 30, 60]
+        def generalise_temporal(self, 
+                                data: Union[pd.Series, pd.DataFrame],
+                                timestamp_col: str = None,
+                                temporal_resolution: int = 60
+                            ) -> pd.Series:
             
+            """
+            Example:
+            ### Using with a Series
+            generalise_temporal(ts_series)
+            
+            ### Using with a DataFrame
+            generalise_temporal(df, timestamp_col='timestamp')
+            """
+            # Validate temporal resolution
             options = list(get_args(self.temporal_resolution_args))
-            assert temporal_resolution in options, f"'{temporal_resolution}' is not in {options}"
+            assert temporal_resolution in options, (
+                f"'{temporal_resolution}' is not in {options}, please choose a valid value"
+            )
+            
+            # Extract the timestamp series based on input type
+            if isinstance(data, pd.DataFrame):
+                if timestamp_col is None:
+                    raise ValueError(
+                        "timestamp_col must be specified when input is a DataFrame"
+                    )
+                if timestamp_col not in data.columns:
+                    raise ValueError(
+                        f"Column '{timestamp_col}' not found in DataFrame. "
+                        f"Available columns are: {list(data.columns)}"
+                    )
+                timestamp = data[timestamp_col]
+            elif isinstance(data, pd.Series):
+                timestamp = data
+            else:
+                raise TypeError(
+                    f"Input must be pandas Series or DataFrame, not {type(data)}"
+                )
+            
+            # Ensure timestamp data is datetime type
+            try:
+                timestamp = pd.to_datetime(timestamp)
+            except Exception as e:
+                raise ValueError(
+                    f"Failed to convert input to datetime: {str(e)}"
+                )
+            
+            # Extract date and time components
+            time = timestamp.dt.time
+            
+            # Create timeslots
+            timeslot = time.apply(
+                lambda x: f'{x.hour}_{((x.minute)//temporal_resolution)*temporal_resolution}'
+            )
+            
+            return pd.Series(timeslot, name='timeslot')
 
-            timestamp.date = timestamp.dt.date
-            timestamp.time = timestamp.dt.time
-            timestamp.timeslot = timestamp.time.apply(lambda x: f'{x.hour}_{((x.minute)//temporal_resolution)*temporal_resolution}')          
-            return pd.Series(timestamp, name='timestamp')   
-
-
-
-
-        # def temporalGeneralization(dataframe, configFile):
-        # configFile = configFile["temporal_generalize"]
-        # temporalAttribute = configFile["temporal_attribute"]
-        # TSR = configFile["timeslot_resolution"]
-        # dataframe["Date"] = pd.to_datetime(dataframe[temporalAttribute]).dt.date
-        # dataframe["Time"] = pd.to_datetime(dataframe[temporalAttribute]).dt.time
-        # time = dataframe["Time"]
-        # dataframe["Timeslot"] = time.apply(lambda x: f'{x.hour}_{((x.minute)//TSR)*TSR}')
-        # dataframe.drop(columns = temporalAttribute, inplace = True)
-        # return dataframe
