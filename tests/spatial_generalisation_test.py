@@ -8,6 +8,8 @@ from typing import Tuple, Literal, Union, get_args
 from generalisation import GeneraliseData
 
 spatial_generaliser = GeneraliseData().SpatialGeneraliser()
+
+# TODO: Add pytest fixtures for common samples
 # Test cases for format_coordinates
 def test_format_coordinates_valid_input():
     """Test format_coordinates with valid input data"""

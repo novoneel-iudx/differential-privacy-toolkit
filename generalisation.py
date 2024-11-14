@@ -48,20 +48,21 @@ class GeneraliseData:
 
     class TemporalGeneraliser:
 
-        @staticmethod       
-        # helper function to clean date and time attribute formatting
+        @staticmethod     
+        # TODO: Do we really need a wrapper around a standard pandas function?  
+        # helper function to convert timestamp to pd.datetime object
         def format_timestamp(series: pd.Series) -> pd.Series:
-            return series.apply(pd.to_datetime(errors='coerce')) # coerce non-parseable values to NaN
+            # Check if all timestamps in the series are of the same format
+            return pd.to_datetime(series, format='mixed', errors='coerce') # coerce non-parseable values to NaT
         
-        def __init__(self):
-            self.temporal_resolution_args = Literal[15, 30, 60]
+        # def __init__(self):
+        #     self.temporal_resolution_args = Literal[15, 30, 60]
         @staticmethod       
-        def generalise_temporal(self, 
-                                data: Union[pd.Series, pd.DataFrame],
+        def generalise_temporal(data: Union[pd.Series, pd.DataFrame],
                                 timestamp_col: str = None,
                                 temporal_resolution: int = 60
                             ) -> pd.Series:
-            
+            temporal_resolution_args = Literal[15, 30, 60]
             """
             Example:
             ### Using with a Series
@@ -71,7 +72,7 @@ class GeneraliseData:
             generalise_temporal(df, timestamp_col='timestamp')
             """
             # Validate temporal resolution
-            options = list(get_args(self.temporal_resolution_args))
+            options = list(get_args(temporal_resolution_args))
             assert temporal_resolution in options, (
                 f"'{temporal_resolution}' is not in {options}, please choose a valid value"
             )
@@ -112,4 +113,3 @@ class GeneraliseData:
             )
             
             return pd.Series(timeslot, name='timeslot')
-
