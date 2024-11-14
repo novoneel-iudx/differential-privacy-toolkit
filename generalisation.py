@@ -2,7 +2,7 @@ from typing import Tuple
 import pandas as pd
 import numpy as np
 import h3
-from typing import Literal, Union, get_args
+from typing import Literal, Union, List, Optional, get_args
 
 
 
@@ -113,3 +113,9 @@ class GeneraliseData:
             )
             
             return pd.Series(timeslot, name='timeslot')
+
+    class CategoricalGeneraliser:
+
+        @staticmethod
+        def generalise_categorical(data: pd.Series, bins: Union[int, List[float]], labels: Optional[List[str]] = None) -> pd.Series:
+            return pd.cut(data, bins=bins, labels=labels)

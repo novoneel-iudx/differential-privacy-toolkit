@@ -7,9 +7,6 @@ class SanitiseData:
     def clip(series: pd.Series, min_value: float, max_value: float) -> pd.Series:
         return series.clip(lower=min_value, upper=max_value)
 
-    def categorise(series: pd.Series, bins: Union[int, List[float]], labels: Optional[List[str]] = None) -> pd.Series:
-        return pd.cut(series, bins=bins, labels=labels)
-
     # TODO: remove common salt for all values and combine with unique id column 
     def hash_values(series: pd.Series, salt: str = '') -> pd.Series:
         return series.apply(lambda x: hashlib.sha256((str(x) + salt).encode('utf-8')).hexdigest() if pd.notnull(x) else x)
@@ -47,16 +44,11 @@ class SanitiseData:
         - 'min_value' (float): Minimum value to clip to.
         - 'max_value' (float): Maximum value to clip to.
 
-        2. 'categorise': Bin continuous data into categories.
-        Parameters:
-        - 'bins' (int or list): Number of bins or list of bin edges.
-        - 'labels' (list, optional): Labels for the bins.
-
-        3. 'hash': Apply a hash function to the data.
+        2. 'hash': Apply a hash function to the data.
         Parameters:
         - 'salt' (str, optional): Salt to add to the hash function. Default is ''.
 
-        4. 'suppress': Replace rare values to protect privacy.
+        3. 'suppress': Replace rare values to protect privacy.
         Parameters:
         - 'threshold' (int, optional): Minimum frequency of a value to avoid suppression. Default is 5.
         - 'replacement' (any, optional): Value to use for suppressed entries. Default is None.
@@ -76,8 +68,6 @@ class SanitiseData:
 
             if method == 'clip':
                 df_sanitised[column] = SanitiseData.clip(df_sanitised[column], params['min_value'], params['max_value'])
-            elif method == 'categorise':
-                df_sanitised[column] = SanitiseData.categorise(df_sanitised[column], params['bins'], params.get('labels'))
             elif method == 'hash':
                 df_sanitised[column] = SanitiseData.hash_values(df_sanitised[column], params.get('salt', ''))
             elif method == 'suppress':
@@ -100,7 +90,6 @@ class SanitiseData:
 
 # sanitisation_rules = {
 #     'age': {'method': 'clip', 'params': {'min_value': 18, 'max_value': 80}},
-#     'income': {'method': 'categorise', 'params': {'bins': 3, 'labels': ['low', 'medium', 'high']}},
 #     'name': {'method': 'hash', 'params': {'salt': 'my_secret_salt'}},
 #     'city': {'method': 'suppress', 'params': {'threshold': 2, 'replacement': 'Other'}}
 # }
