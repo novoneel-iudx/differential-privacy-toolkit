@@ -13,7 +13,28 @@ class GeneraliseData:
 
         @staticmethod
         def format_coordinates(series: pd.Series) -> Tuple[pd.Series, pd.Series]:
+            """
+            Clean coordinates attribute formatting.
+
+            Takes a pandas Series of coordinates and returns a tuple of two Series: the first with the latitude, and the second with the longitude.
+
+            The coordinates are expected to be in the format "[lat, lon]". The function will strip any leading or trailing whitespace and brackets from the coordinates,
+            split them into two parts, and convert each part to a float.
+
+            If the coordinate string is not in the expected format, a ValueError is raised.
+
+            Parameters
+            ----------
+            series : pd.Series
+                The series of coordinates to be cleaned.
+
+            Returns
+            -------
+            Tuple[pd.Series, pd.Series]
+                A tuple of two Series, one with the latitude and one with the longitude.
+            """
             def parse_coordinate(coordinate: str) -> Tuple[float, float]:
+                
                 try:
                     lat, lon = coordinate.strip('[]').strip(' ').split(',')
                     return float(lat), float(lon)
@@ -27,6 +48,31 @@ class GeneraliseData:
 
         @staticmethod
         def generalise_spatial(latitude: pd.Series, longitude: pd.Series, spatial_resolution: int) -> pd.Series:
+                       
+            """
+            Generalise a set of coordinates to an H3 index at a given resolution.
+
+            Parameters
+            ----------
+            latitude : pd.Series
+                The series of latitude values to be generalised.
+            longitude : pd.Series
+                The series of longitude values to be generalised.
+            spatial_resolution : int
+                The spatial resolution of the H3 index. Must be between 0 and 15.
+
+            Returns
+            -------
+            pd.Series
+                A series of H3 indices at the specified resolution.
+
+            Raises
+            ------
+            ValueError
+                If the spatial resolution is not between 0 and 15, or if the latitude or longitude values are not between -90 and 90 or -180 and 180 respectively.
+            Warning
+                If the length of the latitude and longitude series are not equal.
+            """
             if not (0 <= spatial_resolution <= 15):
                 raise ValueError("H3 Spatial resolution must be between 0 and 15.")
             
@@ -62,6 +108,50 @@ class GeneraliseData:
                                 timestamp_col: str = None,
                                 temporal_resolution: int = 60
                             ) -> pd.Series:
+            """
+            Generalise timestamp data into specified temporal resolutions.
+
+            This function processes timestamp data, either in the form of a Series or a DataFrame,
+            and generalises it into timeslots based on the specified temporal resolution. The resolution
+            must be one of the following values: 15, 30, or 60 minutes.
+
+            Parameters
+            ----------
+            data : Union[pd.Series, pd.DataFrame]
+                The input timestamp data. Can be a pandas Series of datetime objects or a DataFrame
+                containing a column with datetime data.
+            timestamp_col : str, optional
+                The name of the column containing timestamp data in the DataFrame. Must be specified
+                if the input data is a DataFrame. Defaults to None.
+            temporal_resolution : int, optional
+                The temporal resolution in minutes for which the timestamps should be generalised.
+                Allowed values are 15, 30, or 60. Defaults to 60.
+
+            Returns
+            -------
+            pd.Series
+                A pandas Series representing the generalised timeslots, with each entry formatted as
+                'hour_minute', indicating the start of the timeslot.
+
+            Raises
+            ------
+            AssertionError
+                If the temporal resolution is not one of the allowed values (15, 30, 60).
+            ValueError
+                If `timestamp_col` is not specified when input data is a DataFrame, or if the specified
+                column is not found in the DataFrame.
+                If the timestamps cannot be converted to datetime objects.
+            TypeError
+                If the input data is neither a pandas Series nor a DataFrame.
+
+            Example
+            -------
+            ### Using with a Series
+            generalise_temporal(ts_series)
+            
+            ### Using with a DataFrame
+            generalise_temporal(df, timestamp_col='timestamp')
+            """
             temporal_resolution_args = Literal[15, 30, 60]
             """
             Example:
@@ -118,4 +208,22 @@ class GeneraliseData:
 
         @staticmethod
         def generalise_categorical(data: pd.Series, bins: Union[int, List[float]], labels: Optional[List[str]] = None) -> pd.Series:
+            """
+            Generalise a categorical column by binning the values into categories.
+
+            Parameters
+            ----------
+            data : pd.Series
+                The input Series to be generalised.
+            bins : Union[int, List[float]]
+                The number of bins to use, or a list of bin edges.
+            labels : Optional[List[str]], optional
+                The labels to use for each bin. If not specified, the bin edges
+                will be used as labels.
+
+            Returns
+            -------
+            pd.Series
+                The generalised Series.
+            """
             return pd.cut(data, bins=bins, labels=labels)

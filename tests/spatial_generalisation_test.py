@@ -5,7 +5,7 @@ import h3
 from datetime import datetime
 from typing import Tuple, Literal, Union, get_args
 
-from generalisation import GeneraliseData
+from modules.generalisation import GeneraliseData
 
 spatial_generaliser = GeneraliseData().SpatialGeneraliser()
 

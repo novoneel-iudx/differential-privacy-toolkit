@@ -1,7 +1,8 @@
 import pytest
 import pandas as pd
 import numpy as np
-import sanitisation
+
+import modules.sanitisation as sanitisation
 
 sanitiser = sanitisation.SanitiseData
 

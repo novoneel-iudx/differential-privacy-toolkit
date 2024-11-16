@@ -1,7 +1,7 @@
 import pytest
 import pandas as pd
 
-from generalisation import GeneraliseData
+from modules.generalisation import GeneraliseData
 
 temporal_generaliser = GeneraliseData().TemporalGeneraliser()
 

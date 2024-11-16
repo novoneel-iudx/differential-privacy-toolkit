@@ -5,15 +5,75 @@ import hashlib
 
 class SanitiseData:
     def clip(series: pd.Series, min_value: float, max_value: float) -> pd.Series:
+        """
+        Clip (limit) the values in a Series to a specified range.
+
+        Parameters
+        ----------
+        series : pd.Series
+            The input Series to be clipped.
+        min_value : float
+            The minimum value to clip to.
+        max_value : float
+            The maximum value to clip to.
+
+        Returns
+        -------
+        pd.Series
+            The clipped Series.
+        """
         return series.clip(lower=min_value, upper=max_value)
 
     # TODO: remove common salt for all values and combine with unique id column 
     def hash_values(series: pd.Series, salt: str = '') -> pd.Series:
+        """
+        Hash the values in a Series using the SHA-256 algorithm.
+
+        This can be used to pseudonymise values that need to be kept secret.
+        The salt parameter can be used to add a common salt to all values.
+        This can be useful if you want to combine the hashed values with other columns
+        to create a unique identifier.
+
+        Parameters
+        ----------
+        series : pd.Series
+            The input Series to be hashed.
+        salt : str, optional
+            The salt to add to all values before hashing.
+            Defaults to an empty string.
+
+        Returns
+        -------
+        pd.Series
+            The hashed Series.
+        """
         return series.apply(lambda x: hashlib.sha256((str(x) + salt).encode('utf-8')).hexdigest() if pd.notnull(x) else x)
         ## uncomment to use the inbuilt python hashing function
         # return series.apply(lambda x: hash(str(x) + salt) if pd.notnull(x) else x)
 
     def suppress(series: pd.Series, threshold: int = 5, replacement: Optional[Union[str, int, float]] = None) -> pd.Series:
+        """
+        Suppress all values in a Series that occur less than a given threshold.
+        
+        Replace all values that occur less than the threshold with the replacement value.
+        
+        Parameters
+        ----------
+        series : pd.Series
+            The input Series to be suppressed.
+        threshold : int, optional
+            The minimum number of occurrences for a value to be kept.
+            Defaults to 5.
+        replacement : Optional[Union[str, int, float]], optional
+            The value to replace suppressed values with.
+            Defaults to None, which means that the values will be replaced with NaN.
+        
+        Returns
+        -------
+        pd.Series
+            The Series with suppressed values.
+        """
+        
         value_counts = series.value_counts()
         values_to_suppress = value_counts[value_counts < threshold].index
         return series.replace(values_to_suppress, replacement)
@@ -24,34 +84,31 @@ class SanitiseData:
         sanitisation_rules: Dict[str, Dict[str, Union[str, float, int, List, Dict]]],
         drop_na: bool = False
     ) -> pd.DataFrame:
+
         """
-        Sanitise the input DataFrame based on specified rules.
+        Sanitise a DataFrame by applying different methods to each column.
 
-        Args:
-        df (pd.DataFrame): Input DataFrame to sanitise.
-        columns_to_sanitise (List[str]): List of column names to apply sanitisation.
-        sanitisation_rules (Dict[str, Dict[str, Union[str, float, int, List, Dict]]]): Rules for sanitisation.
-            Format: {column_name: {'method': <method_name>, 'params': {...}}}
-        drop_na (bool): Whether to drop rows with NA values after sanitisation.
+        Parameters
+        ----------
+        df : pd.DataFrame
+            The input DataFrame to be sanitised.
+        columns_to_sanitise : List[str]
+            The columns in the DataFrame to be sanitised.
+        sanitisation_rules : Dict[str, Dict[str, Union[str, float, int, List, Dict]]]
+            A dictionary that maps each column in columns_to_sanitise to a dictionary
+            that specifies the sanitisation method and parameters for that column.
+            The dictionary should contain the following keys:
+            * 'method': str, the sanitisation method to use
+            * 'params': Dict[str, Union[str, float, int, List, Dict]], the parameters
+              for the sanitisation method
+        drop_na : bool, optional
+            If True, drop all rows in the DataFrame that have any NaN values in the
+            columns specified in columns_to_sanitise. Defaults to False.
 
-        Returns:
-        pd.DataFrame: Sanitised DataFrame.
-
-        Available sanitisation methods and their parameters:
-
-        1. 'clip': Clip values to a specified range.
-        Parameters:
-        - 'min_value' (float): Minimum value to clip to.
-        - 'max_value' (float): Maximum value to clip to.
-
-        2. 'hash': Apply a hash function to the data.
-        Parameters:
-        - 'salt' (str, optional): Salt to add to the hash function. Default is ''.
-
-        3. 'suppress': Replace rare values to protect privacy.
-        Parameters:
-        - 'threshold' (int, optional): Minimum frequency of a value to avoid suppression. Default is 5.
-        - 'replacement' (any, optional): Value to use for suppressed entries. Default is None.
+        Returns
+        -------
+        pd.DataFrame
+            The sanitised DataFrame.
         """
         df_sanitised = df.copy()
 
