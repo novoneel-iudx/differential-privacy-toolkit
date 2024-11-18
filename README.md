@@ -1,5 +1,8 @@
 # differential-privacy-toolkit
-A collection of modules to enact differentially private queries on datasets
+A toolkit for data anonymisation.
+
+View the documentation for this project [here](https://novoneel-iudx.github.io/differential-privacy-toolkit/).
+
 
 Copyright 2024 Center for Data For Public Good
 
