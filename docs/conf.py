@@ -39,3 +39,5 @@ html_theme_options = {
     'logo_only': True,
 }
 
+html_baseurl = 'https://novoneel-iudx.github.io/differential-privacy-toolkit/'
+html_extra_path = ['.nojekyll']
