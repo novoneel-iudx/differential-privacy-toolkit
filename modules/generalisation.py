@@ -99,6 +99,24 @@ class GeneraliseData:
         # helper function to convert timestamp to pd.datetime object
         def format_timestamp(series: pd.Series) -> pd.Series:
             # Check if all timestamps in the series are of the same format
+            """
+            Convert a pandas Series of timestamps into datetime objects.
+
+            This function takes a Series containing timestamp data and converts it into pandas datetime 
+            objects. It handles mixed format timestamps and coerces any non-parseable values into NaT 
+            (Not a Time).
+
+            Parameters
+            ----------
+            series : pd.Series
+                The input Series containing timestamp data to be converted.
+
+            Returns
+            -------
+            pd.Series
+                A Series where all timestamp values have been converted to datetime objects, with 
+                non-parseable values set to NaT.
+            """
             return pd.to_datetime(series, format='mixed', errors='coerce') # coerce non-parseable values to NaT
         
         # def __init__(self):

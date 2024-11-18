@@ -1,0 +1,78 @@
+.. SPIDEr-DP Toolkit documentation
+.. ===============================
+
+.. Add your content using ``reStructuredText`` syntax. See the
+.. `reStructuredText <https://www.sphinx-doc.org/en/master/usage/restructuredtext/index.html>`_
+.. documentation for details.
+
+.. .. automodule:: sanitisation
+..    :members:
+
+.. .. toctree::
+..    :maxdepth: 3 ... autoapi/index
+..    :caption: Contents:
+
+.. Indices and tables
+.. ==================
+.. * :ref:`genindex`
+.. * :ref:`modindex`
+.. * :ref:`search`
+
+
+===================
+cdpg-anonkit
+===================
+
+Welcome to the documentation for cdpg-anonkit - a toolkit for data sanitisation and anonymisation!
+======================================
+
+.. image:: _static/logo.png
+   :alt: Project Logo
+   :align: center
+
+Overview
+--------
+
+You can use this toolkit to 
+
+Quick Start
+----------
+
+.. code-block:: bash
+
+   pip install your-project-name
+
+.. code-block:: python
+
+   import your_project
+   
+   # Quick example
+   result = your_project.main_function()
+
+Key Features
+-----------
+
+* Feature 1: Description
+* Feature 2: Description
+* Feature 3: Description
+
+Contents
+--------
+
+.. toctree::
+   :maxdepth: 2
+   :caption: Contents:
+
+   installation
+   quickstart
+   api
+   examples
+   contributing
+   changelog
+
+Indices and tables
+==================
+
+* :ref:`genindex`
+* :ref:`modindex`
+* :ref:`search`
