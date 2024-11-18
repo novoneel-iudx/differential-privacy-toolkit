@@ -20,11 +20,10 @@
 
 
 ===================
-cdpg-anonkit
+CDPG Anonymisation Toolkit
 ===================
 
-Welcome to the documentation for cdpg-anonkit - a toolkit for data sanitisation and anonymisation!
-======================================
+Welcome to the documentation for the CDPG Anonymisation Toolkit!
 
 .. image:: _static/logo.png
    :alt: Project Logo
@@ -33,34 +32,47 @@ Welcome to the documentation for cdpg-anonkit - a toolkit for data sanitisation 
 Overview
 --------
 
-You can use this toolkit to 
+In this toolkit, we provide a set of tools that a user can use to anonymise data. The provided functions can be used to preprocess and prepare the data for anonymisation, anonymise the data and then apply certain post-processing methods and obtain validation of the selected anonymisation method.
 
 Quick Start
 ----------
 
 .. code-block:: bash
 
-   pip install your-project-name
+   pip install cdpg-anonkit
 
 .. code-block:: python
 
-   import your_project
+   import cdpg-anonkit
    
    # Quick example
    result = your_project.main_function()
 
-Key Features
+Possible Operations
 -----------
 
-* Feature 1: Description
-* Feature 2: Description
-* Feature 3: Description
+* Sanitisation
+  * Clipping
+  * Hashing
+  * Suppression  
+* Generalisation
+  * Spatial Generalisation
+  * Temporal Generalisation
+  * Categorical Generalisation
+* Aggregation
+  * Query Building
+* Differential Privacy
+  * Sensitivity Computation
+  * Noise Addition
+* Post Processing 
+  * Rounding and Clipping
+  * Epsilon vs MAE
 
 Contents
 --------
 
 .. toctree::
-   :maxdepth: 2
+   :maxdepth: 3
    :caption: Contents:
 
    installation

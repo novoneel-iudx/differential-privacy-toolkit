@@ -6,12 +6,13 @@
   <meta charset="utf-8" /><meta name="viewport" content="width=device-width, initial-scale=1" />
 
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-  <title>cdpg-anonkit &mdash; Anonymisation Toolkit 0.1 documentation</title>
+  <title>CDPG Anonymisation Toolkit &mdash; Anonymisation Toolkit 0.1 documentation</title>
       <link rel="stylesheet" type="text/css" href="_static/pygments.css?v=80d5e7a1" />
       <link rel="stylesheet" type="text/css" href="_static/css/theme.css?v=e59714d7" />
       <link rel="stylesheet" type="text/css" href="_static/graphviz.css?v=4ae1632d" />
 
   
+    <link rel="canonical" href="https://novoneel-iudx.github.io/differential-privacy-toolkit/index.html" />
       <script src="_static/jquery.js?v=5d32c60e"></script>
       <script src="_static/_sphinx_javascript_frameworks_compat.js?v=2cd50e6c"></script>
       <script src="_static/documentation_options.js?v=2709fde1"></script>
@@ -65,7 +66,7 @@
           <div role="navigation" aria-label="Page navigation">
   <ul class="wy-breadcrumbs">
       <li><a href="#" class="icon icon-home" aria-label="Home"></a></li>
-      <li class="breadcrumb-item active">cdpg-anonkit</li>
+      <li class="breadcrumb-item active">CDPG Anonymisation Toolkit</li>
       <li class="wy-breadcrumbs-aside">
             <a href="_sources/index.rst.txt" rel="nofollow"> View page source</a>
       </li>
@@ -75,56 +76,75 @@
           <div role="main" class="document" itemscope="itemscope" itemtype="http://schema.org/Article">
            <div itemprop="articleBody">
              
-  <section id="cdpg-anonkit">
-<h1>cdpg-anonkit<a class="headerlink" href="#cdpg-anonkit" title="Link to this heading"></a></h1>
-<section id="welcome-to-the-documentation-for-cdpg-anonkit-a-toolkit-for-data-sanitisation-and-anonymisation">
-<h2>Welcome to the documentation for cdpg-anonkit - a toolkit for data sanitisation and anonymisation!<a class="headerlink" href="#welcome-to-the-documentation-for-cdpg-anonkit-a-toolkit-for-data-sanitisation-and-anonymisation" title="Link to this heading"></a></h2>
+  <section id="cdpg-anonymisation-toolkit">
+<h1>CDPG Anonymisation Toolkit<a class="headerlink" href="#cdpg-anonymisation-toolkit" title="Link to this heading"></a></h1>
+<p>Welcome to the documentation for the CDPG Anonymisation Toolkit!</p>
 <img alt="Project Logo" class="align-center" src="_static/logo.png" />
 <section id="overview">
-<h3>Overview<a class="headerlink" href="#overview" title="Link to this heading"></a></h3>
-<p>You can use this toolkit to</p>
+<h2>Overview<a class="headerlink" href="#overview" title="Link to this heading"></a></h2>
+<p>In this toolkit, we provide a set of tools that a user can use to anonymise data. The provided functions can be used to preprocess and prepare the data for anonymisation, anonymise the data and then apply certain post-processing methods and obtain validation of the selected anonymisation method.</p>
 </section>
 <section id="quick-start">
-<h3>Quick Start<a class="headerlink" href="#quick-start" title="Link to this heading"></a></h3>
-<div class="highlight-bash notranslate"><div class="highlight"><pre><span></span>pip<span class="w"> </span>install<span class="w"> </span>your-project-name
+<h2>Quick Start<a class="headerlink" href="#quick-start" title="Link to this heading"></a></h2>
+<div class="highlight-bash notranslate"><div class="highlight"><pre><span></span>pip<span class="w"> </span>install<span class="w"> </span>cdpg-anonkit
 </pre></div>
 </div>
-<div class="highlight-python notranslate"><div class="highlight"><pre><span></span><span class="kn">import</span> <span class="nn">your_project</span>
+<div class="highlight-python notranslate"><div class="highlight"><pre><span></span><span class="kn">import</span> <span class="nn">cdpg</span><span class="o">-</span><span class="n">anonkit</span>
 
 <span class="c1"># Quick example</span>
 <span class="n">result</span> <span class="o">=</span> <span class="n">your_project</span><span class="o">.</span><span class="n">main_function</span><span class="p">()</span>
 </pre></div>
 </div>
 </section>
-<section id="key-features">
-<h3>Key Features<a class="headerlink" href="#key-features" title="Link to this heading"></a></h3>
+<section id="possible-operations">
+<h2>Possible Operations<a class="headerlink" href="#possible-operations" title="Link to this heading"></a></h2>
 <ul class="simple">
-<li><p>Feature 1: Description</p></li>
-<li><p>Feature 2: Description</p></li>
-<li><p>Feature 3: Description</p></li>
+<li><p>Sanitisation
+* Clipping
+* Hashing
+* Suppression</p></li>
+<li><p>Generalisation
+* Spatial Generalisation
+* Temporal Generalisation
+* Categorical Generalisation</p></li>
+<li><p>Aggregation
+* Query Building</p></li>
+<li><p>Differential Privacy
+* Sensitivity Computation
+* Noise Addition</p></li>
+<li><p>Post Processing
+* Rounding and Clipping
+* Epsilon vs MAE</p></li>
 </ul>
 </section>
 <section id="contents">
-<h3>Contents<a class="headerlink" href="#contents" title="Link to this heading"></a></h3>
+<h2>Contents<a class="headerlink" href="#contents" title="Link to this heading"></a></h2>
 <div class="toctree-wrapper compound">
 <p class="caption" role="heading"><span class="caption-text">Contents:</span></p>
 <ul>
 <li class="toctree-l1"><a class="reference internal" href="autoapi/index.html">API Reference</a><ul>
-<li class="toctree-l2"><a class="reference internal" href="autoapi/sanitisation/index.html">sanitisation</a></li>
-<li class="toctree-l2"><a class="reference internal" href="autoapi/generalisation/index.html">generalisation</a></li>
+<li class="toctree-l2"><a class="reference internal" href="autoapi/sanitisation/index.html">sanitisation</a><ul>
+<li class="toctree-l3"><a class="reference internal" href="autoapi/sanitisation/index.html#classes">Classes</a></li>
+<li class="toctree-l3"><a class="reference internal" href="autoapi/sanitisation/index.html#module-contents">Module Contents</a></li>
+</ul>
+</li>
+<li class="toctree-l2"><a class="reference internal" href="autoapi/generalisation/index.html">generalisation</a><ul>
+<li class="toctree-l3"><a class="reference internal" href="autoapi/generalisation/index.html#classes">Classes</a></li>
+<li class="toctree-l3"><a class="reference internal" href="autoapi/generalisation/index.html#module-contents">Module Contents</a></li>
+</ul>
+</li>
 </ul>
 </li>
 </ul>
 </div>
-</section>
-</section>
 <section id="indices-and-tables">
-<h2>Indices and tables<a class="headerlink" href="#indices-and-tables" title="Link to this heading"></a></h2>
+<h3>Indices and tables<a class="headerlink" href="#indices-and-tables" title="Link to this heading"></a></h3>
 <ul class="simple">
 <li><p><a class="reference internal" href="genindex.html"><span class="std std-ref">Index</span></a></p></li>
 <li><p><a class="reference internal" href="py-modindex.html"><span class="std std-ref">Module Index</span></a></p></li>
 <li><p><a class="reference internal" href="search.html"><span class="std std-ref">Search Page</span></a></p></li>
 </ul>
+</section>
 </section>
 </section>
 
