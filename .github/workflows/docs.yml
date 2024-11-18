@@ -19,7 +19,6 @@ jobs:
       run: |
         python -m pip install --upgrade pip
         pip install sphinx sphinx-rtd-theme
-        pip install .  # Install your package if needed for API docs
     - name: Build documentation
       run: |
         cd docs
@@ -30,10 +29,3 @@ jobs:
       with:
         github_token: ${{ secrets.GITHUB_TOKEN }}
         publish_dir: ./docs/_build/html
-
-# docs/.nojekyll
-# Empty file to prevent GitHub Pages from using Jekyll
-
-# docs/conf.py additions
-html_baseurl = 'https://username.github.io/project-name/'
-html_extra_path = ['.nojekyll']
