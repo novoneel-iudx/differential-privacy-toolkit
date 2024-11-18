@@ -165,7 +165,4 @@ testbed.ipynb
 .vscode/settings.json
 
 lib64
-conf.py
-index.rst
-make.bat
-Makefile
+
