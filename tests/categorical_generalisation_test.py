@@ -1,7 +1,7 @@
 import pytest
 import pandas as pd
 
-from modules.generalisation import GeneraliseData
+from src.cdpg_anonkit.generalisation import GeneraliseData
 
 categorical_generaliser = GeneraliseData().CategoricalGeneraliser()
 

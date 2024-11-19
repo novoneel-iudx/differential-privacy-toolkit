@@ -1,8 +1,7 @@
-from typing import Tuple
+from typing import Tuple, Literal, Union, List, Optional, get_args
 import pandas as pd
 import numpy as np
 import h3
-from typing import Literal, Union, List, Optional, get_args
 
 
 

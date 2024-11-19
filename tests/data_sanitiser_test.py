@@ -2,7 +2,7 @@ import pytest
 import pandas as pd
 import numpy as np
 
-import modules.sanitisation as sanitisation
+import src.cdpg_anonkit.sanitisation as sanitisation
 
 sanitiser = sanitisation.SanitiseData
 
