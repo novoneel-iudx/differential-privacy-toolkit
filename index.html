@@ -85,13 +85,29 @@
 </section>
 <section id="quick-start">
 <h2>Quick Start<a class="headerlink" href="#quick-start" title="Link to this heading"></a></h2>
-<div class="highlight-bash notranslate"><div class="highlight"><pre><span></span>pip<span class="w"> </span>install<span class="w"> </span>cdpg-anonkit
+<div class="highlight-bash notranslate"><div class="highlight"><pre><span></span>pip<span class="w"> </span>install<span class="w"> </span>cdpg-anonkit<span class="w"> </span>--extra-index-url<span class="o">=</span>https://test.pypi.org/simple/
 </pre></div>
 </div>
-<div class="highlight-python notranslate"><div class="highlight"><pre><span></span><span class="kn">import</span> <span class="nn">cdpg</span><span class="o">-</span><span class="n">anonkit</span>
+<div class="highlight-python notranslate"><div class="highlight"><pre><span></span> <span class="kn">import</span> <span class="nn">cdpg_anonkit</span>
 
-<span class="c1"># Quick example</span>
-<span class="n">result</span> <span class="o">=</span> <span class="n">your_project</span><span class="o">.</span><span class="n">main_function</span><span class="p">()</span>
+ <span class="c1"># Quick example</span>
+ <span class="kn">from</span> <span class="nn">cdpg_anonkit</span> <span class="kn">import</span> <span class="n">SanitiseData</span> <span class="k">as</span> <span class="n">sanitisation</span>
+
+<span class="n">example_data</span> <span class="o">=</span> <span class="n">pd</span><span class="o">.</span><span class="n">DataFrame</span><span class="p">({</span>
+      <span class="s1">&#39;age&#39;</span><span class="p">:</span> <span class="p">[</span><span class="mi">25</span><span class="p">,</span> <span class="mi">40</span><span class="p">,</span> <span class="mi">15</span><span class="p">,</span> <span class="mi">60</span><span class="p">,</span> <span class="mi">18</span><span class="p">,</span> <span class="mi">90</span><span class="p">,</span> <span class="mi">22</span><span class="p">,</span> <span class="mi">45</span><span class="p">,</span> <span class="mi">50</span><span class="p">,</span> <span class="mi">55</span><span class="p">],</span>
+      <span class="s1">&#39;income&#39;</span><span class="p">:</span> <span class="p">[</span><span class="mi">50000</span><span class="p">,</span> <span class="mi">80000</span><span class="p">,</span> <span class="mi">65000</span><span class="p">,</span> <span class="mi">120000</span><span class="p">,</span> <span class="mi">20000</span><span class="p">,</span> <span class="mi">90000</span><span class="p">,</span> <span class="mi">55000</span><span class="p">,</span> <span class="mi">75000</span><span class="p">,</span> <span class="mi">85000</span><span class="p">,</span> <span class="mi">95000</span><span class="p">],</span>
+      <span class="s1">&#39;name&#39;</span><span class="p">:</span> <span class="p">[</span><span class="s1">&#39;Alice&#39;</span><span class="p">,</span> <span class="s1">&#39;Bob&#39;</span><span class="p">,</span> <span class="s1">&#39;Charlie&#39;</span><span class="p">,</span> <span class="s1">&#39;David&#39;</span><span class="p">,</span> <span class="s1">&#39;Eve&#39;</span><span class="p">,</span> <span class="s1">&#39;Frank&#39;</span><span class="p">,</span> <span class="s1">&#39;Grace&#39;</span><span class="p">,</span> <span class="s1">&#39;Henry&#39;</span><span class="p">,</span> <span class="s1">&#39;Ivy&#39;</span><span class="p">,</span> <span class="s1">&#39;Jack&#39;</span><span class="p">],</span>
+      <span class="s1">&#39;city&#39;</span><span class="p">:</span> <span class="p">[</span><span class="s1">&#39;New York&#39;</span><span class="p">,</span> <span class="s1">&#39;Los Angeles&#39;</span><span class="p">,</span> <span class="s1">&#39;Chicago&#39;</span><span class="p">,</span> <span class="s1">&#39;Houston&#39;</span><span class="p">,</span> <span class="s1">&#39;Phoenix&#39;</span><span class="p">,</span>
+               <span class="s1">&#39;New York&#39;</span><span class="p">,</span> <span class="s1">&#39;Chicago&#39;</span><span class="p">,</span> <span class="s1">&#39;Los Angeles&#39;</span><span class="p">,</span> <span class="s1">&#39;Dallas&#39;</span><span class="p">,</span> <span class="s1">&#39;Dallas&#39;</span><span class="p">]})</span>
+
+<span class="n">sanitisation_rules</span> <span class="o">=</span> <span class="p">{</span>
+  <span class="s1">&#39;age&#39;</span> <span class="p">:</span> <span class="p">{</span><span class="s1">&#39;method&#39;</span><span class="p">:</span> <span class="s1">&#39;clip&#39;</span><span class="p">,</span> <span class="s1">&#39;params&#39;</span><span class="p">:</span> <span class="p">{</span><span class="s1">&#39;min_value&#39;</span><span class="p">:</span> <span class="mi">25</span><span class="p">,</span> <span class="s1">&#39;max_value&#39;</span><span class="p">:</span> <span class="mi">70</span><span class="p">}},</span>
+  <span class="s1">&#39;name&#39;</span> <span class="p">:</span> <span class="p">{</span><span class="s1">&#39;method&#39;</span><span class="p">:</span> <span class="s1">&#39;hash&#39;</span><span class="p">,</span> <span class="s1">&#39;params&#39;</span><span class="p">:</span> <span class="p">{</span><span class="s1">&#39;salt&#39;</span><span class="p">:</span> <span class="s1">&#39;md5&#39;</span><span class="p">}},</span>
+<span class="p">}</span>
+
+<span class="n">sanitised_data</span> <span class="o">=</span> <span class="n">sanitisation</span><span class="o">.</span><span class="n">sanitise_data</span><span class="p">(</span><span class="n">df</span><span class="o">=</span><span class="n">data_test</span><span class="p">,</span>
+                                            <span class="n">columns_to_sanitise</span><span class="o">=</span><span class="p">[</span><span class="s1">&#39;age&#39;</span><span class="p">,</span> <span class="s1">&#39;name&#39;</span><span class="p">],</span>
+                                            <span class="n">sanitisation_rules</span><span class="o">=</span><span class="n">sanitisation_rules</span><span class="p">)</span>
 </pre></div>
 </div>
 </section>
