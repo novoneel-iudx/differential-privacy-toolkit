@@ -9,18 +9,12 @@ __version__ = "0.1.2"
 from sanitisation import *
 from generalisation import *
 
-
 __all__ = [
     'SanitiseData',
     'GeneraliseData',
-    'SpatialGeneraliser',
-    'TemporalGeneraliser',
+    'sanitise_data',
     'format_coordinates',
     'generalise_spatial',
     'generalise_temporal',
-    'generalise_categorical',
-    'clip',
-    'hash_values',
-    'suppress',
-    'sanitise_data'
+    'generalise_categorical'
 ]
