@@ -90,6 +90,281 @@ View the documentation for this project [here](<a class="reference external" hre
 </ul>
 </div>
 </section>
+<section id="classes">
+<h2>Classes<a class="headerlink" href="#classes" title="Link to this heading"></a></h2>
+<table class="autosummary longtable docutils align-default">
+<tbody>
+<tr class="row-odd"><td><p><a class="reference internal" href="#cdpg_anonkit.SanitiseData" title="cdpg_anonkit.SanitiseData"><code class="xref py py-obj docutils literal notranslate"><span class="pre">SanitiseData</span></code></a></p></td>
+<td><p></p></td>
+</tr>
+<tr class="row-even"><td><p><a class="reference internal" href="#cdpg_anonkit.GeneraliseData" title="cdpg_anonkit.GeneraliseData"><code class="xref py py-obj docutils literal notranslate"><span class="pre">GeneraliseData</span></code></a></p></td>
+<td><p></p></td>
+</tr>
+</tbody>
+</table>
+</section>
+<section id="package-contents">
+<h2>Package Contents<a class="headerlink" href="#package-contents" title="Link to this heading"></a></h2>
+<dl class="py class">
+<dt class="sig sig-object py" id="cdpg_anonkit.SanitiseData">
+<em class="property"><span class="pre">class</span><span class="w"> </span></em><span class="sig-prename descclassname"><span class="pre">cdpg_anonkit.</span></span><span class="sig-name descname"><span class="pre">SanitiseData</span></span><a class="headerlink" href="#cdpg_anonkit.SanitiseData" title="Link to this definition"></a></dt>
+<dd><dl class="py method">
+<dt class="sig sig-object py" id="cdpg_anonkit.SanitiseData.clip">
+<span class="sig-name descname"><span class="pre">clip</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">min_value</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">float</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">max_value</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">float</span></span></em><span class="sig-paren">)</span> <span class="sig-return"><span class="sig-return-icon">&#x2192;</span> <span class="sig-return-typehint"><span class="pre">pandas.Series</span></span></span><a class="headerlink" href="#cdpg_anonkit.SanitiseData.clip" title="Link to this definition"></a></dt>
+<dd><p>Clip (limit) the values in a Series to a specified range.</p>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters<span class="colon">:</span></dt>
+<dd class="field-odd"><ul class="simple">
+<li><p><strong>series</strong> (<em>pd.Series</em>) – The input Series to be clipped.</p></li>
+<li><p><strong>min_value</strong> (<em>float</em>) – The minimum value to clip to.</p></li>
+<li><p><strong>max_value</strong> (<em>float</em>) – The maximum value to clip to.</p></li>
+</ul>
+</dd>
+<dt class="field-even">Returns<span class="colon">:</span></dt>
+<dd class="field-even"><p>The clipped Series.</p>
+</dd>
+<dt class="field-odd">Return type<span class="colon">:</span></dt>
+<dd class="field-odd"><p>pd.Series</p>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="py method">
+<dt class="sig sig-object py" id="cdpg_anonkit.SanitiseData.hash_values">
+<span class="sig-name descname"><span class="pre">hash_values</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">salt</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">str</span></span><span class="w"> </span><span class="o"><span class="pre">=</span></span><span class="w"> </span><span class="default_value"><span class="pre">''</span></span></em><span class="sig-paren">)</span> <span class="sig-return"><span class="sig-return-icon">&#x2192;</span> <span class="sig-return-typehint"><span class="pre">pandas.Series</span></span></span><a class="headerlink" href="#cdpg_anonkit.SanitiseData.hash_values" title="Link to this definition"></a></dt>
+<dd><p>Hash the values in a Series using the SHA-256 algorithm.</p>
+<p>This can be used to pseudonymise values that need to be kept secret.
+The salt parameter can be used to add a common salt to all values.
+This can be useful if you want to combine the hashed values with other columns
+to create a unique identifier.</p>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters<span class="colon">:</span></dt>
+<dd class="field-odd"><ul class="simple">
+<li><p><strong>series</strong> (<em>pd.Series</em>) – The input Series to be hashed.</p></li>
+<li><p><strong>salt</strong> (<em>str</em><em>, </em><em>optional</em>) – The salt to add to all values before hashing.
+Defaults to an empty string.</p></li>
+</ul>
+</dd>
+<dt class="field-even">Returns<span class="colon">:</span></dt>
+<dd class="field-even"><p>The hashed Series.</p>
+</dd>
+<dt class="field-odd">Return type<span class="colon">:</span></dt>
+<dd class="field-odd"><p>pd.Series</p>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="py method">
+<dt class="sig sig-object py" id="cdpg_anonkit.SanitiseData.suppress">
+<span class="sig-name descname"><span class="pre">suppress</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">threshold</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">int</span></span><span class="w"> </span><span class="o"><span class="pre">=</span></span><span class="w"> </span><span class="default_value"><span class="pre">5</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">replacement</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">str</span><span class="w"> </span><span class="p"><span class="pre">|</span></span><span class="w"> </span><span class="pre">int</span><span class="w"> </span><span class="p"><span class="pre">|</span></span><span class="w"> </span><span class="pre">float</span><span class="w"> </span><span class="p"><span class="pre">|</span></span><span class="w"> </span><span class="pre">None</span></span><span class="w"> </span><span class="o"><span class="pre">=</span></span><span class="w"> </span><span class="default_value"><span class="pre">None</span></span></em><span class="sig-paren">)</span> <span class="sig-return"><span class="sig-return-icon">&#x2192;</span> <span class="sig-return-typehint"><span class="pre">pandas.Series</span></span></span><a class="headerlink" href="#cdpg_anonkit.SanitiseData.suppress" title="Link to this definition"></a></dt>
+<dd><p>Suppress all values in a Series that occur less than a given threshold.</p>
+<p>Replace all values that occur less than the threshold with the replacement value.</p>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters<span class="colon">:</span></dt>
+<dd class="field-odd"><ul class="simple">
+<li><p><strong>series</strong> (<em>pd.Series</em>) – The input Series to be suppressed.</p></li>
+<li><p><strong>threshold</strong> (<em>int</em><em>, </em><em>optional</em>) – The minimum number of occurrences for a value to be kept.
+Defaults to 5.</p></li>
+<li><p><strong>replacement</strong> (<em>Optional</em><em>[</em><em>Union</em><em>[</em><em>str</em><em>, </em><em>int</em><em>, </em><em>float</em><em>]</em><em>]</em><em>, </em><em>optional</em>) – The value to replace suppressed values with.
+Defaults to None, which means that the values will be replaced with NaN.</p></li>
+</ul>
+</dd>
+<dt class="field-even">Returns<span class="colon">:</span></dt>
+<dd class="field-even"><p>The Series with suppressed values.</p>
+</dd>
+<dt class="field-odd">Return type<span class="colon">:</span></dt>
+<dd class="field-odd"><p>pd.Series</p>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="py method">
+<dt class="sig sig-object py" id="cdpg_anonkit.SanitiseData.sanitise_data">
+<span class="sig-name descname"><span class="pre">sanitise_data</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">columns_to_sanitise</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">List</span><span class="p"><span class="pre">[</span></span><span class="pre">str</span><span class="p"><span class="pre">]</span></span></span></em>, <em class="sig-param"><span class="n"><span class="pre">sanitisation_rules</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">Dict</span><span class="p"><span class="pre">[</span></span><span class="pre">str</span><span class="p"><span class="pre">,</span></span><span class="w"> </span><span class="pre">Dict</span><span class="p"><span class="pre">[</span></span><span class="pre">str</span><span class="p"><span class="pre">,</span></span><span class="w"> </span><span class="pre">str</span><span class="w"> </span><span class="p"><span class="pre">|</span></span><span class="w"> </span><span class="pre">float</span><span class="w"> </span><span class="p"><span class="pre">|</span></span><span class="w"> </span><span class="pre">int</span><span class="w"> </span><span class="p"><span class="pre">|</span></span><span class="w"> </span><span class="pre">List</span><span class="w"> </span><span class="p"><span class="pre">|</span></span><span class="w"> </span><span class="pre">Dict</span><span class="p"><span class="pre">]</span></span><span class="p"><span class="pre">]</span></span></span></em>, <em class="sig-param"><span class="n"><span class="pre">drop_na</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">bool</span></span><span class="w"> </span><span class="o"><span class="pre">=</span></span><span class="w"> </span><span class="default_value"><span class="pre">False</span></span></em><span class="sig-paren">)</span> <span class="sig-return"><span class="sig-return-icon">&#x2192;</span> <span class="sig-return-typehint"><span class="pre">pandas.DataFrame</span></span></span><a class="headerlink" href="#cdpg_anonkit.SanitiseData.sanitise_data" title="Link to this definition"></a></dt>
+<dd><p>Sanitise a DataFrame by applying different methods to each column.</p>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters<span class="colon">:</span></dt>
+<dd class="field-odd"><ul class="simple">
+<li><p><strong>df</strong> (<em>pd.DataFrame</em>) – The input DataFrame to be sanitised.</p></li>
+<li><p><strong>columns_to_sanitise</strong> (<em>List</em><em>[</em><em>str</em><em>]</em>) – The columns in the DataFrame to be sanitised.</p></li>
+<li><p><strong>sanitisation_rules</strong> (<em>Dict</em><em>[</em><em>str</em><em>, </em><em>Dict</em><em>[</em><em>str</em><em>, </em><em>Union</em><em>[</em><em>str</em><em>, </em><em>float</em><em>, </em><em>int</em><em>, </em><em>List</em><em>, </em><em>Dict</em><em>]</em><em>]</em><em>]</em>) – <p>A dictionary that maps each column in columns_to_sanitise to a dictionary
+that specifies the sanitisation method and parameters for that column.
+The dictionary should contain the following keys:
+* ‘method’: str, the sanitisation method to use
+* ‘params’: Dict[str, Union[str, float, int, List, Dict]], the parameters</p>
+<blockquote>
+<div><p>for the sanitisation method</p>
+</div></blockquote>
+</p></li>
+<li><p><strong>drop_na</strong> (<em>bool</em><em>, </em><em>optional</em>) – If True, drop all rows in the DataFrame that have any NaN values in the
+columns specified in columns_to_sanitise. Defaults to False.</p></li>
+</ul>
+</dd>
+<dt class="field-even">Returns<span class="colon">:</span></dt>
+<dd class="field-even"><p>The sanitised DataFrame.</p>
+</dd>
+<dt class="field-odd">Return type<span class="colon">:</span></dt>
+<dd class="field-odd"><p>pd.DataFrame</p>
+</dd>
+</dl>
+</dd></dl>
+
+</dd></dl>
+
+<dl class="py class">
+<dt class="sig sig-object py" id="cdpg_anonkit.GeneraliseData">
+<em class="property"><span class="pre">class</span><span class="w"> </span></em><span class="sig-prename descclassname"><span class="pre">cdpg_anonkit.</span></span><span class="sig-name descname"><span class="pre">GeneraliseData</span></span><a class="headerlink" href="#cdpg_anonkit.GeneraliseData" title="Link to this definition"></a></dt>
+<dd><dl class="py class">
+<dt class="sig sig-object py" id="cdpg_anonkit.GeneraliseData.SpatialGeneraliser">
+<em class="property"><span class="pre">class</span><span class="w"> </span></em><span class="sig-name descname"><span class="pre">SpatialGeneraliser</span></span><a class="headerlink" href="#cdpg_anonkit.GeneraliseData.SpatialGeneraliser" title="Link to this definition"></a></dt>
+<dd><dl class="py method">
+<dt class="sig sig-object py" id="cdpg_anonkit.GeneraliseData.SpatialGeneraliser.format_coordinates">
+<em class="property"><span class="pre">static</span><span class="w"> </span></em><span class="sig-name descname"><span class="pre">format_coordinates</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">series</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">pandas.Series</span></span></em><span class="sig-paren">)</span> <span class="sig-return"><span class="sig-return-icon">&#x2192;</span> <span class="sig-return-typehint"><span class="pre">Tuple</span><span class="p"><span class="pre">[</span></span><span class="pre">pandas.Series</span><span class="p"><span class="pre">,</span></span><span class="w"> </span><span class="pre">pandas.Series</span><span class="p"><span class="pre">]</span></span></span></span><a class="headerlink" href="#cdpg_anonkit.GeneraliseData.SpatialGeneraliser.format_coordinates" title="Link to this definition"></a></dt>
+<dd><p>Clean coordinates attribute formatting.</p>
+<p>Takes a pandas Series of coordinates and returns a tuple of two Series: the first with the latitude, and the second with the longitude.</p>
+<p>The coordinates are expected to be in the format “[lat, lon]”. The function will strip any leading or trailing whitespace and brackets from the coordinates,
+split them into two parts, and convert each part to a float.</p>
+<p>If the coordinate string is not in the expected format, a ValueError is raised.</p>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters<span class="colon">:</span></dt>
+<dd class="field-odd"><p><strong>series</strong> (<em>pd.Series</em>) – The series of coordinates to be cleaned.</p>
+</dd>
+<dt class="field-even">Returns<span class="colon">:</span></dt>
+<dd class="field-even"><p>A tuple of two Series, one with the latitude and one with the longitude.</p>
+</dd>
+<dt class="field-odd">Return type<span class="colon">:</span></dt>
+<dd class="field-odd"><p>Tuple[pd.Series, pd.Series]</p>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="py method">
+<dt class="sig sig-object py" id="cdpg_anonkit.GeneraliseData.SpatialGeneraliser.generalise_spatial">
+<em class="property"><span class="pre">static</span><span class="w"> </span></em><span class="sig-name descname"><span class="pre">generalise_spatial</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">latitude</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">pandas.Series</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">longitude</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">pandas.Series</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">spatial_resolution</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">int</span></span></em><span class="sig-paren">)</span> <span class="sig-return"><span class="sig-return-icon">&#x2192;</span> <span class="sig-return-typehint"><span class="pre">pandas.Series</span></span></span><a class="headerlink" href="#cdpg_anonkit.GeneraliseData.SpatialGeneraliser.generalise_spatial" title="Link to this definition"></a></dt>
+<dd><p>Generalise a set of coordinates to an H3 index at a given resolution.</p>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters<span class="colon">:</span></dt>
+<dd class="field-odd"><ul class="simple">
+<li><p><strong>latitude</strong> (<em>pd.Series</em>) – The series of latitude values to be generalised.</p></li>
+<li><p><strong>longitude</strong> (<em>pd.Series</em>) – The series of longitude values to be generalised.</p></li>
+<li><p><strong>spatial_resolution</strong> (<em>int</em>) – The spatial resolution of the H3 index. Must be between 0 and 15.</p></li>
+</ul>
+</dd>
+<dt class="field-even">Returns<span class="colon">:</span></dt>
+<dd class="field-even"><p>A series of H3 indices at the specified resolution.</p>
+</dd>
+<dt class="field-odd">Return type<span class="colon">:</span></dt>
+<dd class="field-odd"><p>pd.Series</p>
+</dd>
+<dt class="field-even">Raises<span class="colon">:</span></dt>
+<dd class="field-even"><ul class="simple">
+<li><p><strong>ValueError</strong> – If the spatial resolution is not between 0 and 15, or if the latitude or longitude values are not between -90 and 90 or -180 and 180 respectively.</p></li>
+<li><p><strong>Warning</strong> – If the length of the latitude and longitude series are not equal.</p></li>
+</ul>
+</dd>
+</dl>
+</dd></dl>
+
+</dd></dl>
+
+<dl class="py class">
+<dt class="sig sig-object py" id="cdpg_anonkit.GeneraliseData.TemporalGeneraliser">
+<em class="property"><span class="pre">class</span><span class="w"> </span></em><span class="sig-name descname"><span class="pre">TemporalGeneraliser</span></span><a class="headerlink" href="#cdpg_anonkit.GeneraliseData.TemporalGeneraliser" title="Link to this definition"></a></dt>
+<dd><dl class="py method">
+<dt class="sig sig-object py" id="cdpg_anonkit.GeneraliseData.TemporalGeneraliser.format_timestamp">
+<em class="property"><span class="pre">static</span><span class="w"> </span></em><span class="sig-name descname"><span class="pre">format_timestamp</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">series</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">pandas.Series</span></span></em><span class="sig-paren">)</span> <span class="sig-return"><span class="sig-return-icon">&#x2192;</span> <span class="sig-return-typehint"><span class="pre">pandas.Series</span></span></span><a class="headerlink" href="#cdpg_anonkit.GeneraliseData.TemporalGeneraliser.format_timestamp" title="Link to this definition"></a></dt>
+<dd><p>Convert a pandas Series of timestamps into datetime objects.</p>
+<p>This function takes a Series containing timestamp data and converts it into pandas datetime
+objects. It handles mixed format timestamps and coerces any non-parseable values into NaT
+(Not a Time).</p>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters<span class="colon">:</span></dt>
+<dd class="field-odd"><p><strong>series</strong> (<em>pd.Series</em>) – The input Series containing timestamp data to be converted.</p>
+</dd>
+<dt class="field-even">Returns<span class="colon">:</span></dt>
+<dd class="field-even"><p>A Series where all timestamp values have been converted to datetime objects, with
+non-parseable values set to NaT.</p>
+</dd>
+<dt class="field-odd">Return type<span class="colon">:</span></dt>
+<dd class="field-odd"><p>pd.Series</p>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="py method">
+<dt class="sig sig-object py" id="cdpg_anonkit.GeneraliseData.TemporalGeneraliser.generalise_temporal">
+<em class="property"><span class="pre">static</span><span class="w"> </span></em><span class="sig-name descname"><span class="pre">generalise_temporal</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">data</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">pandas.Series</span><span class="w"> </span><span class="p"><span class="pre">|</span></span><span class="w"> </span><span class="pre">pandas.DataFrame</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">timestamp_col</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">str</span></span><span class="w"> </span><span class="o"><span class="pre">=</span></span><span class="w"> </span><span class="default_value"><span class="pre">None</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">temporal_resolution</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">int</span></span><span class="w"> </span><span class="o"><span class="pre">=</span></span><span class="w"> </span><span class="default_value"><span class="pre">60</span></span></em><span class="sig-paren">)</span> <span class="sig-return"><span class="sig-return-icon">&#x2192;</span> <span class="sig-return-typehint"><span class="pre">pandas.Series</span></span></span><a class="headerlink" href="#cdpg_anonkit.GeneraliseData.TemporalGeneraliser.generalise_temporal" title="Link to this definition"></a></dt>
+<dd><p>Generalise timestamp data into specified temporal resolutions.</p>
+<p>This function processes timestamp data, either in the form of a Series or a DataFrame,
+and generalises it into timeslots based on the specified temporal resolution. The resolution
+must be one of the following values: 15, 30, or 60 minutes.</p>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters<span class="colon">:</span></dt>
+<dd class="field-odd"><ul class="simple">
+<li><p><strong>data</strong> (<em>Union</em><em>[</em><em>pd.Series</em><em>, </em><em>pd.DataFrame</em><em>]</em>) – The input timestamp data. Can be a pandas Series of datetime objects or a DataFrame
+containing a column with datetime data.</p></li>
+<li><p><strong>timestamp_col</strong> (<em>str</em><em>, </em><em>optional</em>) – The name of the column containing timestamp data in the DataFrame. Must be specified
+if the input data is a DataFrame. Defaults to None.</p></li>
+<li><p><strong>temporal_resolution</strong> (<em>int</em><em>, </em><em>optional</em>) – The temporal resolution in minutes for which the timestamps should be generalised.
+Allowed values are 15, 30, or 60. Defaults to 60.</p></li>
+</ul>
+</dd>
+<dt class="field-even">Returns<span class="colon">:</span></dt>
+<dd class="field-even"><p>A pandas Series representing the generalised timeslots, with each entry formatted as
+‘hour_minute’, indicating the start of the timeslot.</p>
+</dd>
+<dt class="field-odd">Return type<span class="colon">:</span></dt>
+<dd class="field-odd"><p>pd.Series</p>
+</dd>
+<dt class="field-even">Raises<span class="colon">:</span></dt>
+<dd class="field-even"><ul class="simple">
+<li><p><strong>AssertionError</strong> – If the temporal resolution is not one of the allowed values (15, 30, 60).</p></li>
+<li><p><strong>ValueError</strong> – If <cite>timestamp_col</cite> is not specified when input data is a DataFrame, or if the specified
+column is not found in the DataFrame.
+If the timestamps cannot be converted to datetime objects.</p></li>
+<li><p><strong>TypeError</strong> – If the input data is neither a pandas Series nor a DataFrame.</p></li>
+</ul>
+</dd>
+</dl>
+<p class="rubric">Example</p>
+<p>### Using with a Series
+generalise_temporal(ts_series)</p>
+<p>### Using with a DataFrame
+generalise_temporal(df, timestamp_col=’timestamp’)</p>
+</dd></dl>
+
+</dd></dl>
+
+<dl class="py class">
+<dt class="sig sig-object py" id="cdpg_anonkit.GeneraliseData.CategoricalGeneraliser">
+<em class="property"><span class="pre">class</span><span class="w"> </span></em><span class="sig-name descname"><span class="pre">CategoricalGeneraliser</span></span><a class="headerlink" href="#cdpg_anonkit.GeneraliseData.CategoricalGeneraliser" title="Link to this definition"></a></dt>
+<dd><dl class="py method">
+<dt class="sig sig-object py" id="cdpg_anonkit.GeneraliseData.CategoricalGeneraliser.generalise_categorical">
+<em class="property"><span class="pre">static</span><span class="w"> </span></em><span class="sig-name descname"><span class="pre">generalise_categorical</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">data</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">pandas.Series</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">bins</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">int</span><span class="w"> </span><span class="p"><span class="pre">|</span></span><span class="w"> </span><span class="pre">List</span><span class="p"><span class="pre">[</span></span><span class="pre">float</span><span class="p"><span class="pre">]</span></span></span></em>, <em class="sig-param"><span class="n"><span class="pre">labels</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">List</span><span class="p"><span class="pre">[</span></span><span class="pre">str</span><span class="p"><span class="pre">]</span></span><span class="w"> </span><span class="p"><span class="pre">|</span></span><span class="w"> </span><span class="pre">None</span></span><span class="w"> </span><span class="o"><span class="pre">=</span></span><span class="w"> </span><span class="default_value"><span class="pre">None</span></span></em><span class="sig-paren">)</span> <span class="sig-return"><span class="sig-return-icon">&#x2192;</span> <span class="sig-return-typehint"><span class="pre">pandas.Series</span></span></span><a class="headerlink" href="#cdpg_anonkit.GeneraliseData.CategoricalGeneraliser.generalise_categorical" title="Link to this definition"></a></dt>
+<dd><p>Generalise a categorical column by binning the values into categories.</p>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters<span class="colon">:</span></dt>
+<dd class="field-odd"><ul class="simple">
+<li><p><strong>data</strong> (<em>pd.Series</em>) – The input Series to be generalised.</p></li>
+<li><p><strong>bins</strong> (<em>Union</em><em>[</em><em>int</em><em>, </em><em>List</em><em>[</em><em>float</em><em>]</em><em>]</em>) – The number of bins to use, or a list of bin edges.</p></li>
+<li><p><strong>labels</strong> (<em>Optional</em><em>[</em><em>List</em><em>[</em><em>str</em><em>]</em><em>]</em><em>, </em><em>optional</em>) – The labels to use for each bin. If not specified, the bin edges
+will be used as labels.</p></li>
+</ul>
+</dd>
+<dt class="field-even">Returns<span class="colon">:</span></dt>
+<dd class="field-even"><p>The generalised Series.</p>
+</dd>
+<dt class="field-odd">Return type<span class="colon">:</span></dt>
+<dd class="field-odd"><p>pd.Series</p>
+</dd>
+</dl>
+</dd></dl>
+
+</dd></dl>
+
+</dd></dl>
+
+</section>
 </section>
 
 
