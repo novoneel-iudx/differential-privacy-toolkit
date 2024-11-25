@@ -33,7 +33,7 @@ package-dir = {"" = "src"}
 [tool.setuptools.packages.find]
 where = ["src"]
 
-[options.extras_require]
+[options.optional-dependencies]
 dev = [
     "pytest>=7.0"
 ]

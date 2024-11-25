@@ -19,7 +19,7 @@ sys.path.insert(0, os.path.abspath('..'))
 
 extensions = ['sphinx.ext.autodoc', 'sphinx.ext.coverage', 'sphinx.ext.napoleon', 'autoapi.extension', 'sphinx.ext.viewcode', 'sphinx.ext.githubpages', 'sphinx_rtd_theme',]
 
-autoapi_dirs = ['../modules']
+autoapi_dirs = ['../src/cdpg-anonkit/modules']
 templates_path = ['_templates']
 exclude_patterns = ['_build', 'Thumbs.db', '.DS_Store']
 
