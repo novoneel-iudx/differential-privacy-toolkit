@@ -1,0 +1,22 @@
+cdpg_anonkit
+============
+
+.. py:module:: cdpg_anonkit
+
+.. autoapi-nested-parse::
+
+   A toolkit for data anonymisation.
+   View the documentation for this project [here](https://novoneel-iudx.github.io/differential-privacy-toolkit/).
+
+
+
+Submodules
+----------
+
+.. toctree::
+   :maxdepth: 1
+
+   /autoapi/cdpg_anonkit/generalisation/index
+   /autoapi/cdpg_anonkit/sanitisation/index
+
+
