@@ -6,8 +6,8 @@ __version__ = "0.1.2"
 
 
 '''Functions to be exposed to user'''
-from sanitisation import *
-from generalisation import *
+from .sanitisation import *
+from .generalisation import *
 
 __all__ = [
     'SanitiseData',
