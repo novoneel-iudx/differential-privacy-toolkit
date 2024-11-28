@@ -1,7 +1,7 @@
 # A toolkit for data anonymisation.
 
 
-## Project migrated to [here](https://github.com/datakaveri/anonymisation-toolkit)
+## Project migrated [here](https://github.com/datakaveri/anonymisation-toolkit)
 
 
 View the documentation for this project [here](https://novoneel-iudx.github.io/differential-privacy-toolkit/).
